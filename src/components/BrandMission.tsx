@@ -68,16 +68,6 @@ export default function BrandMission() {
           >
             
             <div className="space-y-3">
-              <motion.div 
-                variants={itemVariants}
-                className="inline-flex items-center space-x-2 border border-emerald-900/50 bg-emerald-950/10 px-3 py-1 rounded-full" 
-                id="manifesto-badge"
-              >
-                <Sparkles className="h-3 w-3 text-emerald-400" />
-                <span className="font-mono text-[8.5px] tracking-widest text-emerald-300 uppercase">
-                  THE BRAND MANIFESTO
-                </span>
-              </motion.div>
               <motion.h2 
                 variants={itemVariants}
                 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight uppercase"
@@ -112,7 +102,6 @@ export default function BrandMission() {
               
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-white">
-                  <Heart className="h-4 w-4 text-emerald-400" />
                   <span className="font-mono text-[9px] font-bold tracking-widest uppercase">FAITH FIRST</span>
                 </div>
                 <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
@@ -122,7 +111,6 @@ export default function BrandMission() {
 
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-white">
-                  <Sparkles className="h-4 w-4 text-emerald-400" />
                   <span className="font-mono text-[9px] font-bold tracking-widest uppercase">CREATIVITY</span>
                 </div>
                 <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
@@ -132,7 +120,6 @@ export default function BrandMission() {
 
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-white">
-                  <ShieldCheck className="h-4 w-4 text-emerald-400" />
                   <span className="font-mono text-[9px] font-bold tracking-widest uppercase">CONVICTION</span>
                 </div>
                 <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
