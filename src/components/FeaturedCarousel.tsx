@@ -75,9 +75,6 @@ export default function FeaturedCarousel({
     >
       <div className="flex flex-col sm:flex-row sm:items-end justify-between border-b border-zinc-900 pb-5 gap-4" id="carousel-header">
         <div>
-          <span className="font-mono text-[9px] tracking-[0.2em] text-emerald-500 uppercase font-semibold flex items-center gap-1.5">
-            <Sparkles className="h-3 w-3" /> FEATURED RELEASES
-          </span>
           <h2 className="font-serif text-2xl sm:text-3xl font-light tracking-wider text-white uppercase mt-1">
             SELECTED CLOTHES
           </h2>
