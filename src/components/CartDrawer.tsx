@@ -99,7 +99,7 @@ export default function CartDrawer({
               </div>
               <div className="w-full bg-zinc-900 h-1.5 rounded-full overflow-hidden">
                 <div
-                  className="bg-white h-full rounded-full transition-all duration-500"
+                  className="bg-[#991b1b] h-full rounded-full transition-all duration-500 shadow-[0_0_8px_rgba(153,27,27,0.6)]"
                   style={{ width: `${progressPercent}%` }}
                 />
               </div>
@@ -118,7 +118,7 @@ export default function CartDrawer({
               </div>
               <button
                 onClick={onClose}
-                className="border border-zinc-800 px-6 py-2.5 text-[10px] font-mono tracking-widest text-zinc-300 hover:border-white hover:text-white transition-colors uppercase rounded-sm"
+                className="border border-zinc-800 px-6 py-2.5 text-[10px] font-mono tracking-widest text-zinc-300 hover:border-[#991b1b] hover:text-white transition-colors uppercase rounded-sm"
               >
                 RETURN TO SHOPPING
               </button>
@@ -230,7 +230,7 @@ export default function CartDrawer({
                 </div>
                 <button
                   onClick={applyPromo}
-                  className="bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-black hover:bg-white transition-all px-4 py-2 font-mono text-[10px] tracking-widest uppercase rounded-sm"
+                  className="bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white hover:bg-[#991b1b] hover:border-[#991b1b] transition-all px-4 py-2 font-mono text-[10px] tracking-widest uppercase rounded-sm"
                 >
                   APPLY
                 </button>
@@ -278,7 +278,7 @@ export default function CartDrawer({
             <button
               onClick={() => onCheckout(discountPercent, promoCode.trim().toUpperCase())}
               id="btn-checkout-drawer"
-              className="w-full bg-white text-black py-4 text-xs font-bold tracking-widest uppercase hover:bg-zinc-200 transition-colors flex items-center justify-center space-x-2 rounded-sm"
+              className="w-full bg-[#991b1b] text-white py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#7f1d1d] transition-colors flex items-center justify-center space-x-2 rounded-sm shadow-[0_4px_15px_rgba(153,27,27,0.3)]"
             >
               <span>PROCEED TO CHECKOUT</span>
             </button>

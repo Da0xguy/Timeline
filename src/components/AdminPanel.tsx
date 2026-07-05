@@ -251,7 +251,7 @@ export default function AdminPanel({
                             <button
                               onClick={() => onRestock(p.id, 5)}
                               id={`restock-5-${p.id}`}
-                              className="bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-500 px-2 py-1 text-[9px] font-bold rounded-sm transition-colors uppercase"
+                              className="bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-[#991b1b]/80 hover:border-[#991b1b] px-2 py-1 text-[9px] font-bold rounded-sm transition-colors uppercase"
                               title="Replenish 5 units"
                             >
                               +5
@@ -259,7 +259,7 @@ export default function AdminPanel({
                             <button
                               onClick={() => onRestock(p.id, 20)}
                               id={`restock-20-${p.id}`}
-                              className="bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:border-zinc-500 px-2 py-1 text-[9px] font-bold rounded-sm transition-colors uppercase"
+                              className="bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-white hover:bg-[#991b1b]/80 hover:border-[#991b1b] px-2 py-1 text-[9px] font-bold rounded-sm transition-colors uppercase"
                               title="Replenish 20 units"
                             >
                               +20
@@ -420,8 +420,8 @@ export default function AdminPanel({
                         onClick={() => handleSizeToggle(sz)}
                         className={`h-8 w-10 text-[10px] font-mono font-bold uppercase transition-all rounded-sm border ${
                           isChecked
-                            ? 'bg-white text-black border-white'
-                            : 'bg-zinc-900/50 text-zinc-500 border-zinc-900 hover:border-zinc-700'
+                            ? 'bg-[#991b1b] text-white border-[#991b1b] shadow-[0_0_8px_rgba(153,27,27,0.4)]'
+                            : 'bg-zinc-900/50 text-zinc-500 border-zinc-900 hover:border-[#991b1b]'
                         }`}
                       >
                         {sz}
@@ -448,7 +448,7 @@ export default function AdminPanel({
               <button
                 type="submit"
                 id="btn-add-garment"
-                className="w-full bg-zinc-100 hover:bg-white text-black py-3 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-center space-x-1.5 rounded-sm"
+                className="w-full bg-[#991b1b] text-white hover:bg-[#7f1d1d] py-3 text-xs font-bold tracking-widest uppercase transition-all flex items-center justify-center space-x-1.5 rounded-sm shadow-[0_4px_12px_rgba(153,27,27,0.25)]"
               >
                 <Plus className="h-4 w-4" />
                 <span>ADD ITEM</span>

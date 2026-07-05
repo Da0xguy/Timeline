@@ -38,7 +38,7 @@ export default function Navbar({
             >
               <div className="flex flex-col" id="brand-logo-text">
                 <span className="font-serif text-xl sm:text-2xl font-semibold tracking-widest text-white leading-none">
-                  T I M E L I N E
+                  T I M E L I N E<span className="text-red-600 font-sans">.</span>
                 </span>
                 <span className="font-mono text-[8px] tracking-[0.3em] text-zinc-500 mt-1 uppercase">
                   STUDIO APPAREL
@@ -58,7 +58,7 @@ export default function Navbar({
               >
                 <span>HOME</span>
                 {currentView === 'home' && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-emerald-500 rounded-full" />
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#991b1b] rounded-full" />
                 )}
               </button>
 
@@ -72,7 +72,7 @@ export default function Navbar({
               >
                 <span>GALLERY</span>
                 {currentView === 'gallery' && (
-                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-emerald-500 rounded-full" />
+                  <span className="absolute bottom-0 left-0 h-[2px] w-full bg-[#991b1b] rounded-full" />
                 )}
               </button>
             </div>
@@ -87,8 +87,8 @@ export default function Navbar({
                 title="Toggle Store Manager Console"
                 className={`flex items-center space-x-1.5 border px-2.5 py-1.5 text-[9px] font-mono tracking-widest uppercase transition-all duration-300 rounded-sm ${
                   isAdmin
-                    ? 'border-white bg-white text-black font-semibold'
-                    : 'border-zinc-900 text-zinc-500 hover:border-zinc-700 hover:text-white'
+                    ? 'border-[#991b1b] bg-[#991b1b] text-white font-semibold'
+                    : 'border-zinc-900 text-zinc-500 hover:border-[#991b1b]/80 hover:text-white'
                 }`}
               >
                 <Shield className="h-3 w-3" />
@@ -105,7 +105,7 @@ export default function Navbar({
                 {cartCount > 0 && (
                   <span
                     id="badge-cart-count"
-                    className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 font-mono text-[9px] font-black text-white ring-2 ring-zinc-950 animate-bounce"
+                    className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#991b1b] font-mono text-[9px] font-black text-white ring-2 ring-zinc-950 animate-bounce shadow-[0_0_8px_rgba(153,27,27,0.8)]"
                   >
                     {cartCount}
                   </span>
@@ -155,7 +155,7 @@ export default function Navbar({
                 <div className="p-6 border-b border-zinc-900 flex items-center justify-between" id="drawer-header">
                   <div className="flex flex-col">
                     <span className="font-serif text-lg font-semibold tracking-widest text-white leading-none">
-                      TIMELINE
+                      TIMELINE<span className="text-red-600 font-sans">.</span>
                     </span>
                     <span className="font-mono text-[7px] tracking-[0.3em] text-zinc-500 mt-1 uppercase">
                       STUDIO CATALOG
@@ -187,7 +187,7 @@ export default function Navbar({
                         }}
                         className={`w-full flex items-center justify-between p-3.5 border rounded-sm transition-all ${
                           currentView === 'home'
-                            ? 'bg-zinc-900 border-zinc-800 text-white font-semibold'
+                            ? 'bg-[#991b1b]/10 border-[#991b1b] text-white font-semibold shadow-[0_0_12px_rgba(153,27,27,0.15)]'
                             : 'bg-zinc-950/20 border-zinc-900/40 text-zinc-400 hover:text-white'
                         }`}
                       >
@@ -202,7 +202,7 @@ export default function Navbar({
                         }}
                         className={`w-full flex items-center justify-between p-3.5 border rounded-sm transition-all ${
                           currentView === 'gallery'
-                            ? 'bg-zinc-900 border-zinc-800 text-white font-semibold'
+                            ? 'bg-[#991b1b]/10 border-[#991b1b] text-white font-semibold shadow-[0_0_12px_rgba(153,27,27,0.15)]'
                             : 'bg-zinc-950/20 border-zinc-900/40 text-zinc-400 hover:text-white'
                         }`}
                       >

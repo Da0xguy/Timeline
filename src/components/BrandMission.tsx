@@ -79,10 +79,10 @@ export default function BrandMission() {
             {/* Core Mission Block */}
             <motion.div 
               variants={itemVariants}
-              className="border-l-2 border-emerald-500 pl-6 py-1"
+              className="border-l-2 border-red-600 pl-6 py-1"
             >
               <p className="font-serif text-lg sm:text-xl text-zinc-200 italic font-light leading-relaxed">
-                "Timeline is focused on Christian-inspired fashion, emphasizing faith, creativity, and an unwavering connection to Jesus. We aim to inspire believers to live out their faith with absolute confidence and conviction."
+                "Timeline is focused on Christian-inspired fashion, emphasizing faith, creativity, and an unwavering connection to <span className="text-red-500 font-medium">Jesus</span>. We aim to inspire believers to live out their faith with absolute confidence and conviction."
               </p>
             </motion.div>
 
@@ -102,7 +102,7 @@ export default function BrandMission() {
               
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-white">
-                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">FAITH FIRST</span>
+                  <span className="font-mono text-[9px] font-bold tracking-widest text-red-500 uppercase">FAITH FIRST</span>
                 </div>
                 <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
                   Designed as meaningful symbols to ground your daily walk in Jesus Christ.

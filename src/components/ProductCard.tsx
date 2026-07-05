@@ -48,8 +48,8 @@ export default function ProductCard({ product, onSelect, onQuickAdd }: ProductCa
               ONLY {product.stock_quantity} LEFT
             </span>
           ) : product.price > 50000 ? (
-            <span className="bg-zinc-950/90 border border-zinc-800 text-zinc-300 font-mono text-[8px] tracking-widest px-2.5 py-1 backdrop-blur-sm rounded-sm uppercase font-light flex items-center gap-1">
-              <Sparkles className="h-2.5 w-2.5 text-zinc-400" />
+            <span className="bg-red-950/30 border border-red-900/60 text-red-400 font-mono text-[8px] tracking-widest px-2.5 py-1 backdrop-blur-sm rounded-sm uppercase font-medium flex items-center gap-1 shadow-[0_0_8px_rgba(239,68,68,0.1)]">
+              <Sparkles className="h-2.5 w-2.5 text-red-400" />
               PREMIUM RELEASE
             </span>
           ) : null}
@@ -71,7 +71,7 @@ export default function ProductCard({ product, onSelect, onQuickAdd }: ProductCa
                   key={size}
                   onClick={() => onQuickAdd(product, size)}
                   id={`quick-add-${product.id}-${size}`}
-                  className="h-6 w-8 text-[9px] font-mono font-bold tracking-widest text-zinc-400 hover:text-black hover:bg-white border border-zinc-800 hover:border-white transition-colors uppercase rounded-sm"
+                  className="h-6 w-8 text-[9px] font-mono font-bold tracking-widest text-zinc-400 hover:text-white hover:bg-[#991b1b] border border-zinc-800 hover:border-[#991b1b] transition-colors uppercase rounded-sm"
                 >
                   {size}
                 </button>
@@ -103,7 +103,7 @@ export default function ProductCard({ product, onSelect, onQuickAdd }: ProductCa
               e.stopPropagation();
               onSelect(product);
             }}
-            className="text-[9px] font-mono tracking-widest uppercase text-zinc-400 group-hover:text-white group-hover:underline decoration-zinc-500 underline-offset-4 transition-colors"
+            className="text-[9px] font-mono tracking-widest uppercase text-zinc-400 group-hover:text-[#991b1b] group-hover:underline decoration-[#991b1b] underline-offset-4 transition-colors font-medium"
           >
             VIEW DETAILS
           </button>

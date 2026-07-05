@@ -71,7 +71,7 @@ export default function Hero({ onExploreClick }: HeroProps) {
               >
                 TIMELINE <br />
                 <span className="italic font-normal text-zinc-400">CHRISTIAN</span> <br />
-                APPAREL.
+                APPAREL<span className="text-red-600 font-serif font-bold">.</span>
               </motion.h1>
               <motion.p 
                 variants={itemVariants}
@@ -88,14 +88,14 @@ export default function Hero({ onExploreClick }: HeroProps) {
             >
               <button
                 onClick={onExploreClick}
-                className="group relative flex items-center justify-center space-x-2 bg-white text-black px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all duration-300"
+                className="group relative flex items-center justify-center space-x-2 bg-[#991b1b] text-white px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-[#7f1d1d] transition-all duration-300 shadow-[0_4px_20px_rgba(153,27,27,0.25)] rounded-sm"
               >
                 <span>EXPLORE SHOP</span>
                 <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
               </button>
               <a
                 href="#product-grid-section"
-                className="flex items-center justify-center border border-zinc-800 px-8 py-4 text-xs font-mono tracking-widest text-zinc-400 hover:text-white hover:border-zinc-500 transition-colors"
+                className="flex items-center justify-center border border-zinc-850 px-8 py-4 text-xs font-mono tracking-widest text-zinc-400 hover:text-white hover:border-[#991b1b] transition-colors rounded-sm"
               >
                 VIEW PRODUCTS
               </a>
@@ -143,7 +143,7 @@ export default function Hero({ onExploreClick }: HeroProps) {
               {/* Editorial Captions */}
               <div className="absolute bottom-6 left-6 right-6 flex justify-between items-end" id="hero-lookbook-cap">
                 <div>
-                  <span className="font-mono text-[9px] text-zinc-500 tracking-widest block uppercase">
+                  <span className="font-mono text-[9px] text-red-500/95 tracking-widest block uppercase font-medium">
                     NEW COLLECTION // 2025
                   </span>
                   <span className="font-serif text-lg italic text-white font-light">

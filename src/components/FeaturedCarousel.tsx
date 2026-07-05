@@ -185,7 +185,7 @@ export default function FeaturedCarousel({
                         key={sz}
                         disabled={isOutOfStock}
                         onClick={() => onQuickAdd(currentProduct, sz)}
-                        className="h-8 px-4 text-[10px] font-mono tracking-widest text-zinc-400 hover:text-black hover:bg-white border border-zinc-850 hover:border-white transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase rounded-sm"
+                        className="h-8 px-4 text-[10px] font-mono tracking-widest text-zinc-400 hover:text-white hover:bg-[#991b1b] border border-zinc-850 hover:border-[#991b1b] transition-all disabled:opacity-30 disabled:cursor-not-allowed uppercase rounded-sm"
                         title={`Quick add Size ${sz}`}
                       >
                         {sz}
@@ -198,13 +198,13 @@ export default function FeaturedCarousel({
                 <div className="flex flex-col sm:flex-row gap-3 pt-2" id="carousel-actions-row">
                   <button
                     onClick={() => onSelect(currentProduct)}
-                    className="flex-grow bg-white text-black text-[10px] font-bold tracking-widest uppercase hover:bg-zinc-200 py-3.5 px-6 transition-all rounded-sm text-center"
+                    className="flex-grow bg-[#991b1b] text-white text-[10px] font-bold tracking-widest uppercase hover:bg-[#7f1d1d] py-3.5 px-6 transition-all rounded-sm text-center shadow-[0_4px_12px_rgba(153,27,27,0.2)]"
                   >
                     QUICK VIEW DETAILS
                   </button>
                   <button
                     onClick={onViewAllClick}
-                    className="border border-zinc-800 text-zinc-300 hover:text-white hover:border-zinc-500 text-[10px] font-mono tracking-widest uppercase py-3.5 px-6 transition-all rounded-sm text-center"
+                    className="border border-zinc-800 text-zinc-300 hover:text-white hover:border-[#991b1b] text-[10px] font-mono tracking-widest uppercase py-3.5 px-6 transition-all rounded-sm text-center"
                   >
                     EXPLORE SHOP
                   </button>
@@ -225,7 +225,7 @@ export default function FeaturedCarousel({
               setCurrentIndex(idx);
             }}
             className={`h-1.5 transition-all duration-300 rounded-full ${
-              idx === currentIndex ? 'w-8 bg-emerald-500' : 'w-2 bg-zinc-800 hover:bg-zinc-600'
+              idx === currentIndex ? 'w-8 bg-[#991b1b] shadow-[0_0_8px_rgba(153,27,27,0.5)]' : 'w-2 bg-zinc-800 hover:bg-zinc-600'
             }`}
             aria-label={`Go to slide ${idx + 1}`}
           />
