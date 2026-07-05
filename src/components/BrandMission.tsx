@@ -1,7 +1,27 @@
 import React from 'react';
 import { Sparkles, Heart, ShieldCheck } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export default function BrandMission() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
   return (
     <section 
       id="timeline-manifesto-section" 
@@ -11,7 +31,14 @@ export default function BrandMission() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Breathtaking Visual */}
-          <div className="lg:col-span-5 relative group" id="manifesto-image-container">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-100px' }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 relative group" 
+            id="manifesto-image-container"
+          >
             <div className="absolute -inset-1 rounded-sm bg-gradient-to-r from-emerald-950/20 via-zinc-900/30 to-emerald-950/10 opacity-30 blur-xl transition duration-1000 group-hover:opacity-50"></div>
             <div className="relative border border-zinc-900/80 bg-zinc-900/20 p-2 rounded-sm overflow-hidden shadow-2xl">
               <img
@@ -26,36 +53,60 @@ export default function BrandMission() {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Column: Mission Content */}
-          <div className="lg:col-span-7 space-y-8" id="manifesto-text-container">
+          <motion.div 
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-100px' }}
+            className="lg:col-span-7 space-y-8" 
+            id="manifesto-text-container"
+          >
             
             <div className="space-y-3">
-              <div className="inline-flex items-center space-x-2 border border-emerald-900/50 bg-emerald-950/10 px-3 py-1 rounded-full" id="manifesto-badge">
+              <motion.div 
+                variants={itemVariants}
+                className="inline-flex items-center space-x-2 border border-emerald-900/50 bg-emerald-950/10 px-3 py-1 rounded-full" 
+                id="manifesto-badge"
+              >
                 <Sparkles className="h-3 w-3 text-emerald-400" />
                 <span className="font-mono text-[8.5px] tracking-widest text-emerald-300 uppercase">
                   THE BRAND MANIFESTO
                 </span>
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight uppercase">
+              </motion.div>
+              <motion.h2 
+                variants={itemVariants}
+                className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight uppercase"
+              >
                 EMPOWERING FAITH WITH BOLD CONVICTION
-              </h2>
+              </motion.h2>
             </div>
 
             {/* Core Mission Block */}
-            <div className="border-l-2 border-emerald-500 pl-6 py-1">
+            <motion.div 
+              variants={itemVariants}
+              className="border-l-2 border-emerald-500 pl-6 py-1"
+            >
               <p className="font-serif text-lg sm:text-xl text-zinc-200 italic font-light leading-relaxed">
                 "Timeline is focused on Christian-inspired fashion, emphasizing faith, creativity, and an unwavering connection to Jesus. We aim to inspire believers to live out their faith with absolute confidence and conviction."
               </p>
-            </div>
+            </motion.div>
 
-            <p className="font-mono text-[10px] sm:text-[11px] text-zinc-400 leading-relaxed uppercase tracking-wider">
+            <motion.p 
+              variants={itemVariants}
+              className="font-mono text-[10px] sm:text-[11px] text-zinc-400 leading-relaxed uppercase tracking-wider"
+            >
               Every item in our store is designed to express faith beautifully. We craft high-quality clothes with extreme attention to detail and premium fabrics so you can wear your faith comfortably.
-            </p>
+            </motion.p>
 
             {/* Pillar Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-zinc-900" id="manifesto-pillars">
+            <motion.div 
+              variants={itemVariants}
+              className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-zinc-900" 
+              id="manifesto-pillars"
+            >
               
               <div className="space-y-2">
                 <div className="flex items-center space-x-2 text-white">
@@ -87,9 +138,9 @@ export default function BrandMission() {
                 </p>
               </div>
 
-            </div>
+            </motion.div>
 
-          </div>
+          </motion.div>
 
         </div>
       </div>

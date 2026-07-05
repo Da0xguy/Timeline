@@ -27,6 +27,7 @@ export interface Order {
   }[];
   total: number;
   email: string;
+  phone: string;
   shippingAddress: {
     fullName: string;
     addressLine: string;

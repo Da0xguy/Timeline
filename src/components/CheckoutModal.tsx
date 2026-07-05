@@ -1,18 +1,23 @@
 import React, { useState } from 'react';
 import { CartItem, Order } from '../types';
 import { X, CreditCard, Shield, Landmark, ArrowRight, Loader, Sparkles, CheckCircle2, MessageSquare } from 'lucide-react';
+import { motion } from 'motion/react';
 
 export const formatWhatsAppMessage = (
   orderId: string,
   items: { productName: string; size: string; quantity: number; price: number }[],
   total: number,
   customerName: string,
-  address: string
+  address: string,
+  email: string,
+  phone: string
 ) => {
   let text = `*TIMELINE APPAREL ORDER - ${orderId}*\n`;
   text += `=========================\n\n`;
   text += `👤 *CUSTOMER DETAILS*\n`;
   text += `• *Name:* ${customerName}\n`;
+  text += `• *Phone:* ${phone}\n`;
+  text += `• *Email:* ${email}\n`;
   text += `• *Shipping Address:* ${address}\n\n`;
   text += `📦 *ORDERED ITEMS*\n`;
   items.forEach((item) => {
@@ -43,14 +48,15 @@ export default function CheckoutModal({
   isFreeShipping,
   onClose,
   onSuccess,
-  userEmail = 'ayobamioketona@gmail.com'
+  userEmail = ''
 }: CheckoutModalProps) {
   // Form State
   const [email, setEmail] = useState(userEmail);
-  const [fullName, setFullName] = useState('Ayobami Oketona');
-  const [addressLine, setAddressLine] = useState('12 Finchley Road');
-  const [city, setCity] = useState('Lagos');
-  const [postalCode, setPostalCode] = useState('100001');
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [addressLine, setAddressLine] = useState('');
+  const [city, setCity] = useState('');
+  const [postalCode, setPostalCode] = useState('');
   const [country, setCountry] = useState('Nigeria');
 
   // Status
@@ -68,8 +74,8 @@ export default function CheckoutModal({
     setValidationError('');
 
     // Validation
-    if (!email || !fullName || !addressLine || !city || !postalCode || !country) {
-      setValidationError('PLEASE FILL ALL SHIPPING FIELDS.');
+    if (!email || !fullName || !phone || !addressLine || !city || !postalCode || !country) {
+      setValidationError('PLEASE FILL ALL SHIPPING AND CONTACT FIELDS.');
       return;
     }
 
@@ -95,6 +101,7 @@ export default function CheckoutModal({
         })),
         total: grandTotal,
         email: email,
+        phone: phone,
         shippingAddress: {
           fullName,
           addressLine,
@@ -112,7 +119,9 @@ export default function CheckoutModal({
         newOrder.items,
         newOrder.total,
         newOrder.shippingAddress.fullName,
-        `${newOrder.shippingAddress.addressLine}, ${newOrder.shippingAddress.city}, ${newOrder.shippingAddress.postalCode}, ${newOrder.shippingAddress.country}`
+        `${newOrder.shippingAddress.addressLine}, ${newOrder.shippingAddress.city}, ${newOrder.shippingAddress.postalCode}, ${newOrder.shippingAddress.country}`,
+        newOrder.email,
+        newOrder.phone
       );
       window.open(`https://wa.me/2348105385548?text=${message}`, '_blank');
     }, 2200);
@@ -125,7 +134,12 @@ export default function CheckoutModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md overflow-y-auto">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md overflow-y-auto"
+    >
       
       {/* Processing Loader Overlay */}
       {isProcessing && (
@@ -139,7 +153,13 @@ export default function CheckoutModal({
       )}
 
       {/* Main Container */}
-      <div className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-900 rounded-sm p-6 sm:p-8 my-8" id="checkout-main-container">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 350 }}
+        className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-900 rounded-sm p-6 sm:p-8 my-8" 
+        id="checkout-main-container"
+      >
         
         {/* Success Screen state */}
         {completedOrder ? (
@@ -205,7 +225,9 @@ export default function CheckoutModal({
                     completedOrder.items,
                     completedOrder.total,
                     completedOrder.shippingAddress.fullName,
-                    `${completedOrder.shippingAddress.addressLine}, ${completedOrder.shippingAddress.city}, ${completedOrder.shippingAddress.postalCode}, ${completedOrder.shippingAddress.country}`
+                    `${completedOrder.shippingAddress.addressLine}, ${completedOrder.shippingAddress.city}, ${completedOrder.shippingAddress.postalCode}, ${completedOrder.shippingAddress.country}`,
+                    completedOrder.email,
+                    completedOrder.phone
                   );
                   window.open(`https://wa.me/2348105385548?text=${message}`, '_blank');
                 }}
@@ -273,6 +295,18 @@ export default function CheckoutModal({
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       placeholder="e.g. John Doe"
+                      className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-2.5 px-3 rounded-sm font-mono text-[10px] tracking-widest outline-none"
+                    />
+                  </div>
+
+                  <div className="sm:col-span-2 space-y-1">
+                    <label className="block font-mono text-[8px] tracking-widest text-zinc-500 uppercase">PHONE NUMBER:</label>
+                    <input
+                      type="tel"
+                      required
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      placeholder="e.g. +234 800 000 0000"
                       className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-2.5 px-3 rounded-sm font-mono text-[10px] tracking-widest outline-none"
                     />
                   </div>
@@ -424,7 +458,7 @@ export default function CheckoutModal({
           </div>
         )}
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

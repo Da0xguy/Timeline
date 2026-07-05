@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Product } from '../types';
-import { X, Check, ShieldAlert, ArrowRight, Ruler } from 'lucide-react';
+import { X, Check, ShieldAlert, ArrowRight, Ruler, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface ProductDetailsModalProps {
   product: Product | null;
   onClose: () => void;
   onAddToCart: (p: Product, size: 'S' | 'M' | 'L' | 'XL', qty: number) => void;
   currentCartQtyForProduct: (p: Product, size: 'S' | 'M' | 'L' | 'XL') => number;
-  onDirectWhatsAppCheckout: (p: Product, size: 'S' | 'M' | 'L' | 'XL', qty: number, fullName: string, address: string) => void;
+  onDirectWhatsAppCheckout: (p: Product, size: 'S' | 'M' | 'L' | 'XL', qty: number, fullName: string, address: string, email: string, phone: string) => void;
 }
 
 export default function ProductDetailsModal({
@@ -23,10 +24,13 @@ export default function ProductDetailsModal({
   const [quantity, setQuantity] = useState<number>(1);
   const [isAdded, setIsAdded] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
+  const [activeSection, setActiveSection] = useState<'specs' | 'care' | 'shipping' | null>(null);
   
   const [isWhatsAppFlow, setIsWhatsAppFlow] = useState(false);
-  const [waName, setWaName] = useState('Ayobami Oketona');
-  const [waAddress, setWaAddress] = useState('12 Finchley Road, London, NW3 6EB, United Kingdom');
+  const [waName, setWaName] = useState('');
+  const [waAddress, setWaAddress] = useState('');
+  const [waEmail, setWaEmail] = useState('');
+  const [waPhone, setWaPhone] = useState('');
   const [waError, setWaError] = useState('');
 
   const isOutOfStock = product.stock_quantity === 0;
@@ -45,23 +49,31 @@ export default function ProductDetailsModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md overflow-y-auto">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-start md:items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-md overflow-y-auto"
+    >
       
       {/* Container Card */}
-      <div
-        className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-900 rounded-sm overflow-hidden p-6 md:p-8 my-8"
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95, y: 15 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 350 }}
+        className="relative w-full max-w-4xl bg-zinc-950 border border-zinc-900 rounded-sm p-5 sm:p-6 md:p-8 my-4 md:my-8"
         id="details-modal-box"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
           id="btn-close-details"
-          className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors p-2"
+          className="absolute top-4 right-4 text-zinc-400 hover:text-white transition-colors p-2 bg-zinc-900/60 sm:bg-transparent rounded-full border border-zinc-850 sm:border-0 backdrop-blur-sm sm:backdrop-blur-none z-10"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4 sm:h-5 sm:w-5" />
         </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12" id="details-modal-grid">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-12" id="details-modal-grid">
           
           {/* Image Showcase Left Column */}
           <div className="md:col-span-6 flex flex-col space-y-4" id="details-image-panel">
@@ -104,16 +116,128 @@ export default function ProductDetailsModal({
                 {product.description}
               </p>
 
-              {/* Fabrication specifications */}
-              <div className="border-t border-b border-zinc-900 py-4 space-y-2" id="details-spec-list">
-                <span className="block font-mono text-[9px] tracking-widest text-zinc-500 uppercase">
-                  SPECIFICATIONS & FIT:
-                </span>
-                <ul className="space-y-1.5 pl-4 list-disc text-xs text-zinc-400">
-                  {product.details.map((detail, idx) => (
-                    <li key={idx} className="font-light">{detail}</li>
-                  ))}
-                </ul>
+              {/* Premium Interactive More Info Accordion */}
+              <div className="border-t border-b border-zinc-900 py-1 space-y-1" id="details-accordion-container">
+                {/* Section 1: Specifications & Fit */}
+                <div className="border-b border-zinc-900/60 last:border-0">
+                  <button
+                    onClick={() => setActiveSection(activeSection === 'specs' ? null : 'specs')}
+                    className="w-full flex items-center justify-between py-2.5 font-mono text-[9px] tracking-widest text-zinc-300 hover:text-white uppercase transition-colors text-left"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Ruler className="h-3 w-3 text-zinc-500" />
+                      SPECIFICATIONS & FIT
+                    </span>
+                    <motion.span
+                      animate={{ rotate: activeSection === 'specs' ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-zinc-500 font-sans text-[8px]"
+                    >
+                      ▼
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {activeSection === 'specs' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-3.5 pl-5">
+                          <ul className="space-y-1.5 list-disc text-[11px] text-zinc-400 font-light leading-relaxed">
+                            {product.details.map((detail, idx) => (
+                              <li key={idx}>{detail}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Section 2: Fabric & Care */}
+                <div className="border-b border-zinc-900/60 last:border-0">
+                  <button
+                    onClick={() => setActiveSection(activeSection === 'care' ? null : 'care')}
+                    className="w-full flex items-center justify-between py-2.5 font-mono text-[9px] tracking-widest text-zinc-300 hover:text-white uppercase transition-colors text-left"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Sparkles className="h-3 w-3 text-zinc-500" />
+                      FABRIC & CARE
+                    </span>
+                    <motion.span
+                      animate={{ rotate: activeSection === 'care' ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-zinc-500 font-sans text-[8px]"
+                    >
+                      ▼
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {activeSection === 'care' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-3.5 pl-5 space-y-1.5 font-mono text-[9.5px] text-zinc-400 uppercase tracking-wide leading-relaxed">
+                          <p className="text-zinc-300 font-medium">MATERIAL: 100% COMBED RING-SPUN COTTON</p>
+                          <p>• PRE-SHRUNK TO RETAIN ORIGINAL FIT.</p>
+                          <p>• HEAVYWEIGHT TEXTURED WEAVE (240GSM - 300GSM).</p>
+                          <p className="text-zinc-500 text-[9px] mt-1 normal-case font-sans">
+                            <span className="font-mono text-[9px] uppercase tracking-wider block text-zinc-400 mb-0.5">Care Guide:</span>
+                            Machine wash cold, inside out, with like colors. Avoid tumble drying or use low heat. Do not iron directly over printed graphics.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Section 3: Delivery & returns */}
+                <div className="last:border-0">
+                  <button
+                    onClick={() => setActiveSection(activeSection === 'shipping' ? null : 'shipping')}
+                    className="w-full flex items-center justify-between py-2.5 font-mono text-[9px] tracking-widest text-zinc-300 hover:text-white uppercase transition-colors text-left"
+                  >
+                    <span className="flex items-center gap-2">
+                      <Check className="h-3 w-3 text-zinc-500" />
+                      DELIVERY & RETURNS
+                    </span>
+                    <motion.span
+                      animate={{ rotate: activeSection === 'shipping' ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="text-zinc-500 font-sans text-[8px]"
+                    >
+                      ▼
+                    </motion.span>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {activeSection === 'shipping' && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: 'easeInOut' }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-3.5 pl-5 space-y-1.5 font-mono text-[9px] text-zinc-400 uppercase tracking-wider leading-relaxed">
+                          <p className="text-zinc-300 font-medium">🚀 PRIORITY NATIONWIDE SHIPPING</p>
+                          <p>• DISPATCHED WITHIN 24-48 HOURS.</p>
+                          <p>• FREE SHIPPING ON ORDERS OVER ₦50,000.</p>
+                          <p>• SECURE tracked home delivery.</p>
+                          <p className="text-zinc-500 text-[8.5px] mt-1 normal-case font-sans">
+                            Exchanges are welcomed within 7 days of delivery for unworn items with original tags and packaging intact.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
               </div>
 
               {/* Size Selectors */}
@@ -132,7 +256,12 @@ export default function ProductDetailsModal({
                 </div>
 
                 {showSizeGuide && (
-                  <div className="bg-zinc-900/60 border border-zinc-850 p-3 rounded-sm font-mono text-[9px] text-zinc-400 leading-relaxed animate-fade-in" id="size-guide-info">
+                  <motion.div 
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="bg-zinc-900/60 border border-zinc-850 p-3 rounded-sm font-mono text-[9px] text-zinc-400 leading-relaxed" 
+                    id="size-guide-info"
+                  >
                     <table className="w-full text-left">
                       <thead>
                         <tr className="border-b border-zinc-800 text-zinc-500">
@@ -169,7 +298,7 @@ export default function ProductDetailsModal({
                         </tr>
                       </tbody>
                     </table>
-                  </div>
+                  </motion.div>
                 )}
 
                 <div className="flex gap-2" id="modal-size-chips">
@@ -238,7 +367,12 @@ export default function ProductDetailsModal({
             {/* Actions Panel */}
             <div className="space-y-3 pt-6 border-t border-zinc-900" id="details-action-block">
               {isWhatsAppFlow ? (
-                <div className="space-y-4 bg-zinc-950 border border-zinc-900 p-4 rounded-sm animate-fade-in animate-duration-300" id="wa-checkout-subform">
+                <motion.div 
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="space-y-4 bg-zinc-950 border border-zinc-900 p-4 rounded-sm" 
+                  id="wa-checkout-subform"
+                >
                   <span className="block font-mono text-[9px] tracking-widest text-emerald-400 uppercase">
                     DELIVERY DETAILS
                   </span>
@@ -253,7 +387,37 @@ export default function ProductDetailsModal({
                         setWaName(e.target.value);
                         setWaError('');
                       }}
-                      placeholder="Ayobami Oketona"
+                      placeholder="e.g. John Doe"
+                      className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-1.5 px-2.5 rounded-sm font-mono text-[10px] tracking-widest outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block font-mono text-[8px] tracking-widest text-zinc-500 uppercase">CONTACT EMAIL:</label>
+                    <input
+                      type="email"
+                      required
+                      value={waEmail}
+                      onChange={(e) => {
+                        setWaEmail(e.target.value);
+                        setWaError('');
+                      }}
+                      placeholder="e.g. name@domain.com"
+                      className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-1.5 px-2.5 rounded-sm font-mono text-[10px] tracking-widest outline-none"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block font-mono text-[8px] tracking-widest text-zinc-500 uppercase">PHONE NUMBER:</label>
+                    <input
+                      type="tel"
+                      required
+                      value={waPhone}
+                      onChange={(e) => {
+                        setWaPhone(e.target.value);
+                        setWaError('');
+                      }}
+                      placeholder="e.g. +234 800 000 0000"
                       className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-1.5 px-2.5 rounded-sm font-mono text-[10px] tracking-widest outline-none"
                     />
                   </div>
@@ -268,7 +432,7 @@ export default function ProductDetailsModal({
                         setWaAddress(e.target.value);
                         setWaError('');
                       }}
-                      placeholder="12 Finchley Road, London"
+                      placeholder="e.g. 12 Finchley Road, Lagos"
                       className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-1.5 px-2.5 rounded-sm font-mono text-[10px] tracking-widest outline-none"
                     />
                   </div>
@@ -289,11 +453,11 @@ export default function ProductDetailsModal({
                     </button>
                     <button
                       onClick={() => {
-                        if (!waName.trim() || !waAddress.trim()) {
-                          setWaError('PLEASE FILL IN BOTH YOUR NAME AND DELIVERY ADDRESS.');
+                        if (!waName.trim() || !waAddress.trim() || !waEmail.trim() || !waPhone.trim()) {
+                          setWaError('PLEASE FILL IN NAME, ADDRESS, EMAIL, AND PHONE NUMBER.');
                           return;
                         }
-                        onDirectWhatsAppCheckout(product, selectedSize, quantity, waName, waAddress);
+                        onDirectWhatsAppCheckout(product, selectedSize, quantity, waName, waAddress, waEmail, waPhone);
                         setIsWhatsAppFlow(false);
                       }}
                       className="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold font-mono text-[9px] tracking-widest uppercase py-2.5 rounded-sm transition-colors flex items-center justify-center gap-1"
@@ -301,7 +465,7 @@ export default function ProductDetailsModal({
                       <span>ORDER NOW</span>
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ) : isOutOfStock ? (
                 <button
                   disabled
@@ -372,7 +536,7 @@ export default function ProductDetailsModal({
           </div>
 
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

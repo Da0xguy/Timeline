@@ -1,5 +1,6 @@
 import { Product } from '../types';
 import { Sparkles, AlertCircle } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface ProductCardProps {
   key?: string;
@@ -13,20 +14,26 @@ export default function ProductCard({ product, onSelect, onQuickAdd }: ProductCa
   const isLowStock = product.stock_quantity > 0 && product.stock_quantity <= 5;
 
   return (
-    <div
+    <motion.div
       onClick={() => onSelect(product)}
       id={`product-card-${product.id}`}
-      className="group relative flex flex-col bg-zinc-950 border border-zinc-900 rounded-sm overflow-hidden p-3 cursor-pointer transition-all duration-300 hover:border-zinc-500 hover:shadow-2xl hover:shadow-black"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -6, transition: { duration: 0.3, ease: 'easeOut' } }}
+      viewport={{ once: true }}
+      className="group relative flex flex-col bg-zinc-950 border border-zinc-900 rounded-sm overflow-hidden p-3 cursor-pointer transition-colors duration-300 hover:border-zinc-500 hover:shadow-2xl hover:shadow-black"
     >
       {/* Product Image Stage */}
       <div className="relative aspect-[3/4] overflow-hidden bg-zinc-900/40 rounded-sm">
         
         {/* Grayscale hover animation + Zoom effect */}
-        <img
+        <motion.img
           src={product.image_url}
           alt={product.name}
           loading="lazy"
-          className="h-full w-full object-cover transition-all duration-700 ease-out group-hover:scale-105 group-hover:brightness-105"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="h-full w-full object-cover transition-all grayscale brightness-[0.9] contrast-[1.05] group-hover:grayscale-0 group-hover:brightness-105"
         />
 
         {/* Dynamic Badges overlay */}
@@ -102,6 +109,6 @@ export default function ProductCard({ product, onSelect, onQuickAdd }: ProductCa
           </button>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

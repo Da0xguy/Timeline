@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { CartItem } from '../types';
 import { X, Trash2, ShieldAlert, Sparkles, Plus, Minus, Tag } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface CartDrawerProps {
-  isOpen: boolean;
   onClose: () => void;
   cartItems: CartItem[];
   onUpdateQty: (pId: string, size: 'S' | 'M' | 'L' | 'XL', delta: number) => void;
@@ -12,15 +12,12 @@ interface CartDrawerProps {
 }
 
 export default function CartDrawer({
-  isOpen,
   onClose,
   cartItems,
   onUpdateQty,
   onRemoveItem,
   onCheckout
 }: CartDrawerProps) {
-  if (!isOpen) return null;
-
   const [promoCode, setPromoCode] = useState('');
   const [discountPercent, setDiscountPercent] = useState(0);
   const [promoError, setPromoError] = useState('');
@@ -54,12 +51,21 @@ export default function CartDrawer({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-sm animate-fade-in">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex justify-end bg-black/80 backdrop-blur-sm"
+    >
       {/* Backdrop closer */}
       <div className="absolute inset-0" onClick={onClose} />
 
       {/* Cart Drawer Panel */}
-      <div
+      <motion.div
+        initial={{ x: "100%" }}
+        animate={{ x: 0 }}
+        exit={{ x: "100%" }}
+        transition={{ type: "spring", damping: 30, stiffness: 300 }}
         className="relative w-full max-w-md bg-zinc-950 border-l border-zinc-900 h-full flex flex-col shadow-2xl justify-between"
         id="cart-drawer-panel"
       >
@@ -279,7 +285,7 @@ export default function CartDrawer({
           </div>
         )}
 
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

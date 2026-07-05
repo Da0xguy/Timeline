@@ -11,6 +11,7 @@ import CheckoutModal from './components/CheckoutModal';
 import AdminPanel from './components/AdminPanel';
 import FeaturedCarousel from './components/FeaturedCarousel';
 import { SlidersHorizontal, ShieldAlert, Sparkles, AlertCircle, ShoppingBag, X, Shield, Search } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function App() {
   // --- Persistent Storage State ---
@@ -183,7 +184,9 @@ export default function App() {
     size: 'S' | 'M' | 'L' | 'XL',
     quantity: number,
     fullName: string,
-    address: string
+    address: string,
+    email: string,
+    phone: string
   ) => {
     // 1. Decrement single product stock quantity
     setProducts((prev) =>
@@ -213,7 +216,8 @@ export default function App() {
         quantity
       }],
       total: product.price * quantity,
-      email: 'ayobamioketona@gmail.com',
+      email: email,
+      phone: phone,
       shippingAddress: {
         fullName,
         addressLine: address,
@@ -229,6 +233,8 @@ export default function App() {
     text += `=========================\n\n`;
     text += `👤 *CUSTOMER DETAILS*\n`;
     text += `• *Name:* ${fullName}\n`;
+    text += `• *Phone:* ${phone}\n`;
+    text += `• *Email:* ${email}\n`;
     text += `• *Shipping Address:* ${address}\n\n`;
     text += `📦 *ORDERED ITEM*\n`;
     text += `• *${product.name}*\n`;
@@ -365,154 +371,167 @@ export default function App() {
         ) : (
           /* Luxury Front-Facing Client Experience */
           <div id="client-shop-experience" className="space-y-4">
-            
-            {currentView === 'home' ? (
-              <>
-                {/* Immersive Hero Landing Section */}
-                <Hero onExploreClick={() => {
-                  setCurrentView('gallery');
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }} />
-
-                {/* Sacred Brand Mission Statement */}
-                <BrandMission />
-
-                {/* Featured Products Carousel */}
-                <FeaturedCarousel
-                  products={products}
-                  onSelect={(p) => setSelectedProduct(p)}
-                  onQuickAdd={(p, sz) => handleAddToCart(p, sz, 1)}
-                  onViewAllClick={() => {
+            <AnimatePresence mode="wait">
+              {currentView === 'home' ? (
+                <motion.div
+                  key="home-view"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="space-y-4"
+                >
+                  {/* Immersive Hero Landing Section */}
+                  <Hero onExploreClick={() => {
                     setCurrentView('gallery');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                />
-              </>
-            ) : (
-              /* Main Product Catalog / Gallery Section */
-              <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-10" id="product-grid-section">
-                
-                {/* Gallery Title & Mobile Friendly Subcategories Row */}
-                <div className="space-y-6">
-                  <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-zinc-900 pb-5 gap-4" id="gallery-header-row">
-                    <div className="space-y-1">
-                      <span className="font-mono text-[9px] tracking-[0.2em] text-emerald-500 uppercase font-semibold">
-                        TIMELINE APPAREL CATALOG // GALLERY
-                      </span>
-                      <h2 className="font-serif text-3xl font-light tracking-wider text-white uppercase">
-                        {selectedCategory === 'All' ? 'ALL PRODUCTS' : selectedCategory.toUpperCase()}
-                      </h2>
-                    </div>
+                  }} />
 
-                    {/* Go Back Home button */}
-                    <button
-                      onClick={() => {
-                        setCurrentView('home');
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                      }}
-                      className="text-xs font-mono tracking-widest text-zinc-500 hover:text-white uppercase transition-colors self-start md:self-auto border border-zinc-900 hover:border-zinc-700 px-4 py-2 rounded-sm"
-                    >
-                      ← BACK TO HOME
-                    </button>
-                  </div>
+                  {/* Sacred Brand Mission Statement */}
+                  <BrandMission />
 
-                  {/* Horizontal Categories Filter - Moved to Gallery as requested, highly mobile scrollable */}
-                  <div className="flex flex-col gap-4 bg-zinc-950/40 border border-zinc-900 p-4 rounded-sm" id="gallery-filter-card">
-                    
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                      {/* Left: Category buttons */}
-                      <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar max-w-full" id="gallery-categories-scroller">
-                        {(['All', 'Hoodies', 'Tees', 'Outerwear', 'Accessories'] as const).map((cat) => (
-                          <button
-                            key={cat}
-                            onClick={() => setSelectedCategory(cat)}
-                            className={`whitespace-nowrap px-4 py-2 text-[10.5px] font-mono font-medium tracking-widest uppercase rounded-sm border transition-all ${
-                              selectedCategory === cat
-                                ? 'bg-white text-black border-white font-bold'
-                                : 'bg-zinc-900/60 text-zinc-400 border-zinc-900 hover:text-white hover:border-zinc-700'
-                            }`}
-                          >
-                            {cat}
-                          </button>
-                        ))}
+                  {/* Featured Products Carousel */}
+                  <FeaturedCarousel
+                    products={products}
+                    onSelect={(p) => setSelectedProduct(p)}
+                    onQuickAdd={(p, sz) => handleAddToCart(p, sz, 1)}
+                    onViewAllClick={() => {
+                      setCurrentView('gallery');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="gallery-view"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 space-y-10"
+                  id="product-grid-section"
+                >
+                  {/* Gallery Title & Mobile Friendly Subcategories Row */}
+                  <div className="space-y-6">
+                    <div className="flex flex-col md:flex-row md:items-end justify-between border-b border-zinc-900 pb-5 gap-4" id="gallery-header-row">
+                      <div className="space-y-1">
+                        <span className="font-mono text-[9px] tracking-[0.2em] text-emerald-500 uppercase font-semibold">
+                          TIMELINE APPAREL CATALOG // GALLERY
+                        </span>
+                        <h2 className="font-serif text-3xl font-light tracking-wider text-white uppercase">
+                          {selectedCategory === 'All' ? 'ALL PRODUCTS' : selectedCategory.toUpperCase()}
+                        </h2>
                       </div>
 
-                      {/* Right: Search Input + Sorting */}
-                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto" id="gallery-controls-inputs">
-                        {/* Search Input block */}
-                        <div className="relative flex-grow sm:flex-grow-0" id="gallery-search-block">
-                          <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="SEARCH CLOTHES..."
-                            className="w-full sm:w-48 bg-zinc-900/40 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-2.5 pl-8 pr-3 rounded-sm font-mono text-[10px] tracking-widest outline-none placeholder:text-zinc-600 uppercase"
-                          />
-                          <Search className="absolute left-3 top-3 h-3.5 w-3.5 text-zinc-500" />
-                          {searchTerm && (
+                      {/* Go Back Home button */}
+                      <button
+                        onClick={() => {
+                          setCurrentView('home');
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                        className="text-xs font-mono tracking-widest text-zinc-500 hover:text-white uppercase transition-colors self-start md:self-auto border border-zinc-900 hover:border-zinc-700 px-4 py-2 rounded-sm"
+                      >
+                        ← BACK TO HOME
+                      </button>
+                    </div>
+
+                    {/* Horizontal Categories Filter - Moved to Gallery as requested, highly mobile scrollable */}
+                    <div className="flex flex-col gap-4 bg-zinc-950/40 border border-zinc-900 p-4 rounded-sm" id="gallery-filter-card">
+                      
+                      <div className="flex flex-wrap items-center justify-between gap-4">
+                        {/* Left: Category buttons */}
+                        <div className="flex items-center gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar max-w-full" id="gallery-categories-scroller">
+                          {(['All', 'Hoodies', 'Tees', 'Outerwear', 'Accessories'] as const).map((cat) => (
                             <button
-                              onClick={() => setSearchTerm('')}
-                              className="absolute right-3 top-3 text-zinc-500 hover:text-white"
+                              key={cat}
+                              onClick={() => setSelectedCategory(cat)}
+                              className={`whitespace-nowrap px-4 py-2 text-[10.5px] font-mono font-medium tracking-widest uppercase rounded-sm border transition-all ${
+                                selectedCategory === cat
+                                  ? 'bg-white text-black border-white font-bold'
+                                  : 'bg-zinc-900/60 text-zinc-400 border-zinc-900 hover:text-white hover:border-zinc-700'
+                              }`}
                             >
-                              <X className="h-3 w-3" />
+                              {cat}
                             </button>
-                          )}
+                          ))}
                         </div>
 
-                        {/* Sort Selector */}
-                        <div className="flex items-center space-x-2 border border-zinc-900 bg-zinc-900/20 px-3 py-2.5 rounded-sm" id="gallery-sort-box">
-                          <SlidersHorizontal className="h-3.5 w-3.5 text-zinc-500" />
-                          <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">SORT:</span>
-                          <select
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value as any)}
-                            className="bg-transparent text-[9px] font-mono text-zinc-200 outline-none cursor-pointer tracking-widest uppercase border-none focus:ring-0 p-0"
-                          >
-                            <option value="default" className="bg-zinc-950">DEFAULT</option>
-                            <option value="price-asc" className="bg-zinc-950">PRICE: LOW-HIGH</option>
-                            <option value="price-desc" className="bg-zinc-950">PRICE: HIGH-LOW</option>
-                          </select>
+                        {/* Right: Search Input + Sorting */}
+                        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full lg:w-auto" id="gallery-controls-inputs">
+                          {/* Search Input block */}
+                          <div className="relative flex-grow sm:flex-grow-0" id="gallery-search-block">
+                            <input
+                              type="text"
+                              value={searchTerm}
+                              onChange={(e) => setSearchTerm(e.target.value)}
+                              placeholder="SEARCH CLOTHES..."
+                              className="w-full sm:w-48 bg-zinc-900/40 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-2.5 pl-8 pr-3 rounded-sm font-mono text-[10px] tracking-widest outline-none placeholder:text-zinc-600 uppercase"
+                            />
+                            <Search className="absolute left-3 top-3 h-3.5 w-3.5 text-zinc-500" />
+                            {searchTerm && (
+                              <button
+                                onClick={() => setSearchTerm('')}
+                                className="absolute right-3 top-3 text-zinc-500 hover:text-white"
+                              >
+                                <X className="h-3 w-3" />
+                              </button>
+                            )}
+                          </div>
+
+                          {/* Sort Selector */}
+                          <div className="flex items-center space-x-2 border border-zinc-900 bg-zinc-900/20 px-3 py-2.5 rounded-sm" id="gallery-sort-box">
+                            <SlidersHorizontal className="h-3.5 w-3.5 text-zinc-500" />
+                            <span className="font-mono text-[9px] text-zinc-500 uppercase tracking-widest">SORT:</span>
+                            <select
+                              value={sortBy}
+                              onChange={(e) => setSortBy(e.target.value as any)}
+                              className="bg-transparent text-[9px] font-mono text-zinc-200 outline-none cursor-pointer tracking-widest uppercase border-none focus:ring-0 p-0"
+                            >
+                              <option value="default" className="bg-zinc-950">DEFAULT</option>
+                              <option value="price-asc" className="bg-zinc-950">PRICE: LOW-HIGH</option>
+                              <option value="price-desc" className="bg-zinc-950">PRICE: HIGH-LOW</option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                {/* Dynamic Product Grid */}
-                {filteredProducts.length === 0 ? (
-                  <div className="flex flex-col items-center justify-center py-24 text-center space-y-4 border border-zinc-900/60 rounded-sm" id="empty-results-state">
-                    <AlertCircle className="h-8 w-8 text-zinc-600" />
-                    <div>
-                      <p className="font-serif text-lg text-zinc-300 tracking-wider">NO CLOTHES FOUND</p>
-                      <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.15em] mt-1">
-                        No items match your filters or search terms. Try resetting.
-                      </p>
+                  {/* Dynamic Product Grid */}
+                  {filteredProducts.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center py-24 text-center space-y-4 border border-zinc-900/60 rounded-sm" id="empty-results-state">
+                      <AlertCircle className="h-8 w-8 text-zinc-600" />
+                      <div>
+                        <p className="font-serif text-lg text-zinc-300 tracking-wider">NO CLOTHES FOUND</p>
+                        <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-[0.15em] mt-1">
+                          No items match your filters or search terms. Try resetting.
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setSearchTerm('');
+                          setSelectedCategory('All');
+                        }}
+                        className="border border-zinc-800 hover:border-white text-zinc-300 hover:text-white font-mono text-[9px] tracking-widest px-6 py-2.5 uppercase transition-colors rounded-sm"
+                      >
+                        RESET ALL FILTERS
+                      </button>
                     </div>
-                    <button
-                      onClick={() => {
-                        setSearchTerm('');
-                        setSelectedCategory('All');
-                      }}
-                      className="border border-zinc-800 hover:border-white text-zinc-300 hover:text-white font-mono text-[9px] tracking-widest px-6 py-2.5 uppercase transition-colors rounded-sm"
-                    >
-                      RESET ALL FILTERS
-                    </button>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="apparel-cards-grid">
-                    {filteredProducts.map((prod) => (
-                      <ProductCard
-                        key={prod.id}
-                        product={prod}
-                        onSelect={(p) => setSelectedProduct(p)}
-                        onQuickAdd={(p, sz) => handleAddToCart(p, sz, 1)}
-                      />
-                    ))}
-                  </div>
-                )}
-
-              </div>
-            )}
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="apparel-cards-grid">
+                      {filteredProducts.map((prod) => (
+                        <ProductCard
+                          key={prod.id}
+                          product={prod}
+                          onSelect={(p) => setSelectedProduct(p)}
+                          onQuickAdd={(p, sz) => handleAddToCart(p, sz, 1)}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </main>
@@ -569,7 +588,7 @@ export default function App() {
               <span>•</span>
               <a href="#privacy" className="hover:text-zinc-400">PRIVACY PROTOCOL</a>
               <span>•</span>
-              <span className="text-zinc-500">MEMBER // AYOBAMI OKETONA</span>
+              <span className="text-zinc-500">WEAR YOUR VALUES</span>
             </div>
           </div>
         </div>
@@ -578,115 +597,139 @@ export default function App() {
       {/* --- Overlay Modal Containers --- */}
 
       {/* Product Detailed Spec Modal */}
-      <ProductDetailsModal
-        product={selectedProduct}
-        onClose={() => setSelectedProduct(null)}
-        onAddToCart={handleAddToCart}
-        currentCartQtyForProduct={getCartQuantityForProductSize}
-        onDirectWhatsAppCheckout={handleDirectWhatsAppCheckout}
-      />
+      <AnimatePresence>
+        {selectedProduct && (
+          <ProductDetailsModal
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={handleAddToCart}
+            currentCartQtyForProduct={getCartQuantityForProductSize}
+            onDirectWhatsAppCheckout={handleDirectWhatsAppCheckout}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Sliding Cart bag drawer */}
-      <CartDrawer
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cartItems={cart}
-        onUpdateQty={handleUpdateCartQty}
-        onRemoveItem={handleRemoveCartItem}
-        onCheckout={handleProceedToCheckout}
-      />
+      <AnimatePresence>
+        {isCartOpen && (
+          <CartDrawer
+            onClose={() => setIsCartOpen(false)}
+            cartItems={cart}
+            onUpdateQty={handleUpdateCartQty}
+            onRemoveItem={handleRemoveCartItem}
+            onCheckout={handleProceedToCheckout}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Simulated Secure Credit Payment Modal */}
-      {isCheckoutOpen && (
-        <CheckoutModal
-          cartItems={cart}
-          subtotal={cartSubtotal}
-          discountPercent={checkoutDiscount}
-          isFreeShipping={isCartEligibleForFreeShipping}
-          onClose={() => setIsCheckoutOpen(false)}
-          onSuccess={handleCheckoutSuccess}
-        />
-      )}
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <CheckoutModal
+            cartItems={cart}
+            subtotal={cartSubtotal}
+            discountPercent={checkoutDiscount}
+            isFreeShipping={isCartEligibleForFreeShipping}
+            onClose={() => setIsCheckoutOpen(false)}
+            onSuccess={handleCheckoutSuccess}
+          />
+        )}
+      </AnimatePresence>
 
       {/* Admin Decryption Login Challenge Modal */}
-      {showAdminLogin && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" id="admin-login-modal">
-          <div className="w-full max-w-md bg-zinc-950 border border-zinc-900 rounded-sm p-6 sm:p-8 space-y-6" id="admin-login-box">
-            
-            <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
-              <div className="flex items-center space-x-2.5">
-                <Shield className="h-5 w-5 text-zinc-400" />
-                <h3 className="font-serif text-lg tracking-wider text-white uppercase">ADMIN LOGIN</h3>
+      <AnimatePresence>
+        {showAdminLogin && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" 
+            id="admin-login-modal"
+          >
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: "spring", damping: 25, stiffness: 350 }}
+              className="w-full max-w-md bg-zinc-950 border border-zinc-900 rounded-sm p-6 sm:p-8 space-y-6" 
+              id="admin-login-box"
+            >
+              
+              <div className="flex justify-between items-center border-b border-zinc-900 pb-4">
+                <div className="flex items-center space-x-2.5">
+                  <Shield className="h-5 w-5 text-zinc-400" />
+                  <h3 className="font-serif text-lg tracking-wider text-white uppercase">ADMIN LOGIN</h3>
+                </div>
+                <button
+                  onClick={() => setShowAdminLogin(false)}
+                  className="text-zinc-500 hover:text-white transition-colors p-1"
+                >
+                  <X className="h-5 w-5" />
+                </button>
               </div>
-              <button
-                onClick={() => setShowAdminLogin(false)}
-                className="text-zinc-500 hover:text-white transition-colors p-1"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
 
-            <div className="space-y-4">
-              <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest leading-relaxed">
-                Enter the password to access the store management dashboard.
-              </p>
+              <div className="space-y-4">
+                <p className="font-mono text-[10px] text-zinc-500 uppercase tracking-widest leading-relaxed">
+                  Enter the password to access the store management dashboard.
+                </p>
 
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                if (adminPasswordInput === 'timeline@2025') {
-                  setIsAdmin(true);
-                  setShowAdminLogin(false);
-                  setAdminPasswordInput('');
-                  showToast('Logged in as Admin successfully.');
-                } else {
-                  setAdminLoginError('Incorrect password. Please try again.');
-                }
-              }} className="space-y-4">
-                <div className="space-y-1">
-                  <label className="block font-mono text-[8px] tracking-widest text-zinc-500 uppercase">
-                    PASSWORD:
-                  </label>
-                  <input
-                    type="password"
-                    required
-                    autoFocus
-                    placeholder="••••••••••••"
-                    value={adminPasswordInput}
-                    onChange={(e) => {
-                      setAdminPasswordInput(e.target.value);
-                      setAdminLoginError('');
-                    }}
-                    className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-3 px-4 rounded-sm font-mono text-[11px] tracking-[0.25em] outline-none text-center"
-                  />
-                </div>
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  if (adminPasswordInput === 'timeline@2025') {
+                    setIsAdmin(true);
+                    setShowAdminLogin(false);
+                    setAdminPasswordInput('');
+                    showToast('Logged in as Admin successfully.');
+                  } else {
+                    setAdminLoginError('Incorrect password. Please try again.');
+                  }
+                }} className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="block font-mono text-[8px] tracking-widest text-zinc-500 uppercase">
+                      PASSWORD:
+                    </label>
+                    <input
+                      type="password"
+                      required
+                      autoFocus
+                      placeholder="••••••••••••"
+                      value={adminPasswordInput}
+                      onChange={(e) => {
+                        setAdminPasswordInput(e.target.value);
+                        setAdminLoginError('');
+                      }}
+                      className="w-full bg-zinc-900/50 border border-zinc-900 focus:border-zinc-500 text-zinc-200 py-3 px-4 rounded-sm font-mono text-[11px] tracking-[0.25em] outline-none text-center"
+                    />
+                  </div>
 
-                {adminLoginError && (
-                  <p className="font-mono text-[9px] text-red-500 font-bold uppercase text-center flex items-center justify-center gap-1">
-                    <AlertCircle className="h-3 w-3" />
-                    {adminLoginError}
-                  </p>
-                )}
+                  {adminLoginError && (
+                    <p className="font-mono text-[9px] text-red-500 font-bold uppercase text-center flex items-center justify-center gap-1">
+                      <AlertCircle className="h-3 w-3" />
+                      {adminLoginError}
+                    </p>
+                  )}
 
-                <div className="flex gap-3 pt-2">
-                  <button
-                    type="button"
-                    onClick={() => setShowAdminLogin(false)}
-                    className="flex-1 border border-zinc-900 hover:border-zinc-500 text-zinc-400 hover:text-white font-mono text-[10px] tracking-widest uppercase py-3 rounded-sm transition-colors"
-                  >
-                    CANCEL
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 bg-white hover:bg-zinc-200 text-black font-bold font-mono text-[10px] tracking-widest uppercase py-3 rounded-sm transition-colors"
-                  >
-                    LOGIN
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+                  <div className="flex gap-3 pt-2">
+                    <button
+                      type="button"
+                      onClick={() => setShowAdminLogin(false)}
+                      className="flex-1 border border-zinc-900 hover:border-zinc-500 text-zinc-400 hover:text-white font-mono text-[10px] tracking-widest uppercase py-3 rounded-sm transition-colors"
+                    >
+                      CANCEL
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 bg-white hover:bg-zinc-200 text-black font-bold font-mono text-[10px] tracking-widest uppercase py-3 rounded-sm transition-colors"
+                    >
+                      LOGIN
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

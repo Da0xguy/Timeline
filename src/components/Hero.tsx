@@ -1,35 +1,91 @@
 import { ArrowRight, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 
 interface HeroProps {
   onExploreClick: () => void;
 }
 
 export default function Hero({ onExploreClick }: HeroProps) {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+    }
+  };
+
+  const gradientVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 1.5, ease: 'easeOut' }
+    }
+  };
+
   return (
     <div className="relative overflow-hidden bg-zinc-950 border-b border-zinc-900" id="hero-section">
       
       {/* Decorative subtle lighting gradients */}
-      <div className="absolute top-1/4 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-zinc-800/10 blur-3xl" />
-      <div className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-zinc-900/20 blur-3xl" />
+      <motion.div 
+        variants={gradientVariants}
+        initial="hidden"
+        animate="visible"
+        className="absolute top-1/4 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-zinc-800/10 blur-3xl" 
+      />
+      <motion.div 
+        variants={gradientVariants}
+        initial="hidden"
+        animate="visible"
+        className="absolute bottom-10 right-10 h-72 w-72 rounded-full bg-zinc-900/20 blur-3xl" 
+      />
 
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" id="hero-grid">
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center" 
+          id="hero-grid"
+        >
           
           {/* Hero Left Content */}
           <div className="lg:col-span-7 flex flex-col justify-center space-y-8" id="hero-info-panel">
 
             <div className="space-y-4" id="hero-headlines">
-              <h1 className="font-serif text-5xl sm:text-7xl font-light tracking-tight text-white leading-[1.05]">
+              <motion.h1 
+                variants={itemVariants}
+                className="font-serif text-5xl sm:text-7xl font-light tracking-tight text-white leading-[1.05]"
+              >
                 TIMELINE <br />
                 <span className="italic font-normal text-zinc-400">CHRISTIAN</span> <br />
                 APPAREL.
-              </h1>
-              <p className="max-w-lg text-sm sm:text-base text-zinc-400 leading-relaxed font-light">
+              </motion.h1>
+              <motion.p 
+                variants={itemVariants}
+                className="max-w-lg text-sm sm:text-base text-zinc-400 leading-relaxed font-light"
+              >
                 Premium, high-quality Christian-inspired fashion. Thoughtfully designed with first-class fabrics and premium combed cottons to inspire believers to live with faith and confidence.
-              </p>
+              </motion.p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4" id="hero-ctas">
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4" 
+              id="hero-ctas"
+            >
               <button
                 onClick={onExploreClick}
                 className="group relative flex items-center justify-center space-x-2 bg-white text-black px-8 py-4 text-xs font-bold uppercase tracking-widest hover:bg-zinc-200 transition-all duration-300"
@@ -43,10 +99,14 @@ export default function Hero({ onExploreClick }: HeroProps) {
               >
                 VIEW PRODUCTS
               </a>
-            </div>
+            </motion.div>
 
             {/* Micro Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-zinc-900/80 font-mono text-left" id="hero-stats">
+            <motion.div 
+              variants={itemVariants}
+              className="grid grid-cols-3 gap-6 pt-8 border-t border-zinc-900/80 font-mono text-left" 
+              id="hero-stats"
+            >
               <div>
                 <span className="block text-lg font-medium text-white">100%</span>
                 <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Premium Cotton</span>
@@ -59,11 +119,17 @@ export default function Hero({ onExploreClick }: HeroProps) {
                 <span className="block text-lg font-medium text-white">FAST</span>
                 <span className="text-[10px] text-zinc-500 uppercase tracking-widest">Courier Delivery</span>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Hero Right Media Panel */}
-          <div className="lg:col-span-5 relative" id="hero-media-panel">
+          <motion.div 
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+            className="lg:col-span-5 relative" 
+            id="hero-media-panel"
+          >
             <div className="aspect-[3/4] overflow-hidden bg-zinc-900 border border-zinc-800/80 rounded-sm relative group">
               
               {/* Image with sleek overlay */}
@@ -89,9 +155,9 @@ export default function Hero({ onExploreClick }: HeroProps) {
                 </span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
       </div>
     </div>
   );
