@@ -1,6 +1,8 @@
 import React from 'react';
 import { Sparkles, Heart, ShieldCheck } from 'lucide-react';
 import { motion } from 'motion/react';
+// @ts-ignore
+import missionBg from '../assets/images/timeline_mission_statement_bg_1783277946508.jpg';
 
 export default function BrandMission() {
   const containerVariants = {
@@ -42,7 +44,7 @@ export default function BrandMission() {
             <div className="absolute -inset-1 rounded-sm bg-gradient-to-r from-emerald-950/20 via-zinc-900/30 to-emerald-950/10 opacity-30 blur-xl transition duration-1000 group-hover:opacity-50"></div>
             <div className="relative border border-zinc-900/80 bg-zinc-900/20 p-2 rounded-sm overflow-hidden shadow-2xl">
               <img
-                src="/src/assets/images/timeline_mission_statement_bg_1783277946508.jpg"
+                src={missionBg}
                 alt="Timeline Sacred Editorial Concept representing Christian Faith & Creativity"
                 referrerPolicy="no-referrer"
                 className="w-full h-[320px] sm:h-[400px] object-cover filter brightness-[0.85] contrast-[1.05] grayscale-[20%] transition-all duration-700 hover:scale-[1.02] rounded-xs"
