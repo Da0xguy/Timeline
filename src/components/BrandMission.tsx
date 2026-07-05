@@ -1,0 +1,98 @@
+import React from 'react';
+import { Sparkles, Heart, ShieldCheck } from 'lucide-react';
+
+export default function BrandMission() {
+  return (
+    <section 
+      id="timeline-manifesto-section" 
+      className="border-y border-zinc-900 bg-zinc-950/40 py-16 sm:py-24"
+    >
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          
+          {/* Left Column: Breathtaking Visual */}
+          <div className="lg:col-span-5 relative group" id="manifesto-image-container">
+            <div className="absolute -inset-1 rounded-sm bg-gradient-to-r from-emerald-950/20 via-zinc-900/30 to-emerald-950/10 opacity-30 blur-xl transition duration-1000 group-hover:opacity-50"></div>
+            <div className="relative border border-zinc-900/80 bg-zinc-900/20 p-2 rounded-sm overflow-hidden shadow-2xl">
+              <img
+                src="/src/assets/images/timeline_mission_statement_bg_1783277946508.jpg"
+                alt="Timeline Sacred Editorial Concept representing Christian Faith & Creativity"
+                referrerPolicy="no-referrer"
+                className="w-full h-[320px] sm:h-[400px] object-cover filter brightness-[0.85] contrast-[1.05] grayscale-[20%] transition-all duration-700 hover:scale-[1.02] rounded-xs"
+              />
+              <div className="absolute bottom-5 left-5 bg-black/80 backdrop-blur-md px-3.5 py-1.5 border border-zinc-800 rounded-sm">
+                <span className="font-mono text-[8px] tracking-[0.25em] text-zinc-400 uppercase">
+                  TIMELINE ARCHIVE // SACRED STATEMENT
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Mission Content */}
+          <div className="lg:col-span-7 space-y-8" id="manifesto-text-container">
+            
+            <div className="space-y-3">
+              <div className="inline-flex items-center space-x-2 border border-emerald-900/50 bg-emerald-950/10 px-3 py-1 rounded-full" id="manifesto-badge">
+                <Sparkles className="h-3 w-3 text-emerald-400" />
+                <span className="font-mono text-[8.5px] tracking-widest text-emerald-300 uppercase">
+                  THE BRAND MANIFESTO
+                </span>
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-white leading-tight uppercase">
+                EMPOWERING FAITH WITH BOLD CONVICTION
+              </h2>
+            </div>
+
+            {/* Core Mission Block */}
+            <div className="border-l-2 border-emerald-500 pl-6 py-1">
+              <p className="font-serif text-lg sm:text-xl text-zinc-200 italic font-light leading-relaxed">
+                "Timeline is focused on Christian-inspired fashion, emphasizing faith, creativity, and an unwavering connection to Jesus. We aim to inspire believers to live out their faith with absolute confidence and conviction."
+              </p>
+            </div>
+
+            <p className="font-mono text-[10px] sm:text-[11px] text-zinc-400 leading-relaxed uppercase tracking-wider">
+              Every item in our store is designed to express faith beautifully. We craft high-quality clothes with extreme attention to detail and premium fabrics so you can wear your faith comfortably.
+            </p>
+
+            {/* Pillar Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-zinc-900" id="manifesto-pillars">
+              
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2 text-white">
+                  <Heart className="h-4 w-4 text-emerald-400" />
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">FAITH FIRST</span>
+                </div>
+                <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
+                  Designed as meaningful symbols to ground your daily walk in Jesus Christ.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2 text-white">
+                  <Sparkles className="h-4 w-4 text-emerald-400" />
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">CREATIVITY</span>
+                </div>
+                <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
+                  Modern design trends fused with thoughtful, spiritually inspiring details.
+                </p>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex items-center space-x-2 text-white">
+                  <ShieldCheck className="h-4 w-4 text-emerald-400" />
+                  <span className="font-mono text-[9px] font-bold tracking-widest uppercase">CONVICTION</span>
+                </div>
+                <p className="font-mono text-[8.5px] text-zinc-500 leading-normal uppercase">
+                  Represent your values proudly and walk with confidence.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+}

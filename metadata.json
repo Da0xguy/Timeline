@@ -1,0 +1,6 @@
+{
+  "name": "Timeline Apparel",
+  "description": "A premium, dark-themed e-commerce experience for Timeline featuring luxury hoodies, tees, outerwear, and accessories with automatic WhatsApp order transmission and full catalog management backdoor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
